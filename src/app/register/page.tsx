@@ -1,169 +1,120 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { loginUser } from "@/utils/actions/loginUser";
-import { signIn } from "next-auth/react";
+
+import { registerUser } from "@/utils/actions/registerUser";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export type FormValues = {
+export type UserData = {
+  username: string;
   email: string;
   password: string;
 };
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const {
     register,
     handleSubmit,
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<UserData>();
 
   const router = useRouter();
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: UserData) => {
+    // console.log(data);
+
     try {
-      const res = await loginUser(data);
-      if (res.accessToken) {
+      const res = await registerUser(data);
+      if (res.success) {
         alert(res.message);
-        localStorage.setItem("accessToken", res.accessToken);
-        router.push("/");
+        router.push("/login");
       }
     } catch (err: any) {
       console.error(err.message);
-      alert(err.message); // Show error to user
+      throw new Error(err.message);
     }
   };
 
   return (
-    <div className="my-10 w-[90%] mx-auto">
-      <h1 className="text-center text-4xl mb-5 font-bold">
-        Login <span className="text-teal-500">Here</span>
+    <div className="my-10">
+      <h1 className="text-center text-4xl font-bold mb-5">
+        Register <span className="text-teal-500">Now</span>
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
           <Image
-            src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg?t=st=1710130697~exp=1710134297~hmac=f1b21d9c1823a0657d339c256a1c4ad8301168480e35b35aeba5106568a21010&w=740"
+            src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-135.jpg?t=st=1710081713~exp=1710085313~hmac=f637c194f1f143e63a84950cbf978997453777c872adf4aebbbecdaa445601a1&w=740"
             width={500}
             height={200}
             alt="login page"
-            className="w-full h-auto"
+            className="w-full h-[85%] object-cover"
           />
         </div>
 
         <div className="w-[80%] mx-auto bg-white p-6 shadow-lg rounded-lg">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-6">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+            <div className="mb-4">
+              <label className="block text-gray-700 font-medium mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                {...register("username")}
+                placeholder="User Name"
+                className="w-full p-3 border border-gray-300 rounded "
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700 font-medium mb-2">
                 Email
               </label>
               <input
-                id="email"
                 type="email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address"
-                  }
-                })}
+                {...register("email")}
                 placeholder="Email"
-                className={`mt-1 block w-full px-4 py-2 border ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm sm:text-sm`}
+                className="w-full p-3 border border-gray-300 rounded "
+                required
               />
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-              )}
             </div>
 
             <div className="mb-6">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label className="block text-gray-700 font-medium mb-2">
                 Password
               </label>
               <input
-                id="password"
+                {...register("password")}
                 type="password"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters"
-                  }
-                })}
                 placeholder="Password"
-                className={`mt-1 block w-full px-4 py-2 border ${
-                  errors.password ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm sm:text-sm`}
+                className="w-full p-3 border border-gray-300 rounded "
+                required
               />
-              {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-              )}
             </div>
 
-            <div>
+            <div className="mb-4">
               <button
                 type="submit"
                 className="w-full border border-teal-500 text-teal-500 font-semibold py-2 px-4 rounded-md shadow-md hover:bg-teal-500 hover:text-black"
               >
-                Login
+                Register
               </button>
             </div>
+
+            <p className="text-center text-gray-600">
+              Already have an account?{" "}
+              <Link className="text-teal-500 hover:underline" href="/login">
+                Login
+              </Link>
+            </p>
           </form>
-
-          <p className="text-center mt-4 text-sm text-gray-600">
-            Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-teal-500 hover:underline">
-              Create an account
-            </Link>
-          </p>
-
-          <p className="text-center mt-6 text-sm text-gray-500">
-            Or Sign Up Using
-          </p>
-
-          <div className="flex justify-center gap-4 mt-4">
-            <button
-              className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full shadow-md hover:bg-gray-200"
-              onClick={() =>
-                signIn("google", {
-                  callbackUrl: "/dashboard",
-                })
-              }
-            >
-              <Image
-                src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png"
-                width={30}
-                height={30}
-                alt="Google logo"
-              />
-            </button>
-            <button
-              className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full shadow-md hover:bg-gray-200"
-              onClick={() =>
-                signIn("github", {
-                  callbackUrl: "/dashboard",
-                })
-              }
-            >
-              <Image
-                src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-                width={25}
-                height={25}
-                alt="GitHub logo"
-              />
-            </button>
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

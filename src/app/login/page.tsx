@@ -16,6 +16,7 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     formState: { errors },
   } = useForm<FormValues>();
 
