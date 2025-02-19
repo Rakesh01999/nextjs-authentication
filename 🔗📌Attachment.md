@@ -6,7 +6,7 @@
 A fully functional **Next.js authentication system** with **NextAuth**, **custom authentication**, **GitHub & Google OAuth**, and **server actions** for user registration and login. Includes **protected routes, user sessions, middleware-based authorization, and deployment on Vercel**.  
 
 ---
-Live Link:https://nextjs-authentication-lac.vercel.app/
+Live Link:[https://nextjs-authentication-lac.vercel.app/](https://nextjs-authentication-lac.vercel.app/)
 ---
 
 ## **📌 Features**  
