@@ -13,8 +13,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
-      <body>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <Navbar />
         <div className="min-h-screen w-[90%] mx-auto">{children}</div>
       </body>
