@@ -1,6 +1,6 @@
 // src/utils/authOptions.ts
 import { NextAuthOptions } from "next-auth"
-import GitHubProvider from "next-auth/providers/github";
+import GitHubProvider from "next-auth/providers/github"
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -9,9 +9,29 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GITHUB_SECRET as string,
         })
     ],
-    // Add these for better security and routing
     secret: process.env.NEXTAUTH_SECRET,
+    // session: {
+    //     strategy: "jwt",
+    //     maxAge: 30 * 24 * 60 * 60, // 30 days
+    // },
+    // callbacks: {
+    //     async session({ session, token }) {
+    //         // Add user info to session
+    //         if (session.user) {
+    //             session.user.id = token.sub
+    //         }
+    //         return session
+    //     },
+    //     async jwt({ token, user }) {
+    //         // Add user info to token
+    //         if (user) {
+    //             token.id = user.id
+    //         }
+    //         return token
+    //     }
+    // },
     pages: {
         signIn: '/login',
+        error: '/auth/error',
     },
 }

@@ -1,6 +1,13 @@
 import Link from "next/link";
 
-const Navbar = () => {
+type UserProps = {
+  user?: {
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+  };
+};
+const Navbar = ({ session }: { session: UserProps | null | undefined }) => {
   return (
     <div className="w-[90%] mx-auto flex items-center justify-between bg-white border-b py-4">
       <div className="flex items-center">
