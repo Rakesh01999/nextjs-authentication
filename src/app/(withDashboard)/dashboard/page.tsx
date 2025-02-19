@@ -1,15 +1,15 @@
 import { authOptions } from "@/utils/authOptions";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);
 
   // Redirect to login if no session
-  if (!session) {
-    redirect("/login");
-  }
+  // if (!session) {
+  //   redirect("/login");
+  // }
 
   return (
     <div>
