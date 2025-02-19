@@ -14,6 +14,10 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOODLE_SECRET  as string,
         })
     ],
+    pages: {
+        signIn: '/login',
+        // error: '/auth/error',
+    },
     secret: process.env.NEXTAUTH_SECRET,
     // session: {
     //     strategy: "jwt",
@@ -35,8 +39,5 @@ export const authOptions: NextAuthOptions = {
     //         return token
     //     }
     // },
-    pages: {
-        signIn: '/login',
-        error: '/auth/error',
-    },
+    
 }
