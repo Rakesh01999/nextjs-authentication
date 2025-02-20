@@ -1,7 +1,8 @@
 # NextAuth.js Authentication in Next.js Project
 
 ---
-Live Link:[Click  Here to see live demo](https://nextjs-authentication-lac.vercel.app/)
+## Live Link:
+[live demo](https://nextjs-authentication-lac.vercel.app/)
 
 ---
 
