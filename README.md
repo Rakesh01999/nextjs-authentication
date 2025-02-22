@@ -6,7 +6,8 @@
 
 ---
 
-## Server side :https://github.com/Rakesh01999/nextjs-custom-auth-server
+## Server side :
+[Server-Side-Repository](https://github.com/Rakesh01999/nextjs-custom-auth-server)
 
 ---
 
